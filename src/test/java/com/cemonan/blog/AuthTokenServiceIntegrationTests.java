@@ -20,7 +20,6 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 public class AuthTokenServiceIntegrationTests {
 
     private final AuthTokenService authTokenService;
-    private final UserFactory userFactory;
     private final TokenFactory tokenFactory;
 
     @Value("${token.expires.after.seconds}")
@@ -28,17 +27,14 @@ public class AuthTokenServiceIntegrationTests {
 
 
     @Autowired
-    public AuthTokenServiceIntegrationTests(AuthTokenService authTokenService, UserFactory userFactory, TokenFactory tokenFactory) {
+    public AuthTokenServiceIntegrationTests(AuthTokenService authTokenService, TokenFactory tokenFactory) {
         this.authTokenService = authTokenService;
-        this.userFactory = userFactory;
         this.tokenFactory = tokenFactory;
     }
 
     @Test
     void testCreateToken() {
-        User user = userFactory.create();
-
-        Token token = authTokenService.create(user);
+        Token token = tokenFactory.create();
 
         assertThat(token).isNotNull();
         assertThat(token.getToken()).isNotNull();
