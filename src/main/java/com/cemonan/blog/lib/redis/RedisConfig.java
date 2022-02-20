@@ -14,7 +14,7 @@ public class RedisConfig {
     @Value("${redis.port}")
     private String port;
 
-    @Bean
+    @Bean(name = "RedisConfig.getPool")
     public JedisPool getPool() {
         return new JedisPool(host, Integer.parseInt(port));
     }

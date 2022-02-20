@@ -5,6 +5,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 
 @Component
 @ComponentScan(basePackages = "com.cemonan.blog.lib.redis")
@@ -18,7 +19,6 @@ public class RedisConnector {
     }
 
     public Jedis getConnection() {
-        RedisConfig redisConfig = context.getBean(RedisConfig.class);
-        return redisConfig.getPool().getResource();
+        return ((JedisPool) context.getBean("RedisConfig.getPool")).getResource();
     }
 }
