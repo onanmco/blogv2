@@ -8,7 +8,7 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
 @Component
-@ComponentScan(basePackages = "com.cemonan.blog.lib.redis")
+@ComponentScan(basePackages = "com.cemonan.blog.config")
 public class RedisConnector {
 
     private final ApplicationContext context;
@@ -19,6 +19,6 @@ public class RedisConnector {
     }
 
     public Jedis getConnection() {
-        return ((JedisPool) context.getBean("RedisConfig.getPool")).getResource();
+        return ((JedisPool) context.getBean("config.RedisConfig.getPool")).getResource();
     }
 }

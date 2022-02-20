@@ -1,4 +1,4 @@
-package com.cemonan.blog.lib.redis;
+package com.cemonan.blog.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -14,7 +14,7 @@ public class RedisConfig {
     @Value("${redis.port}")
     private String port;
 
-    @Bean(name = "RedisConfig.getPool")
+    @Bean(name = "config.RedisConfig.getPool")
     public JedisPool getPool() {
         return new JedisPool(host, Integer.parseInt(port));
     }
