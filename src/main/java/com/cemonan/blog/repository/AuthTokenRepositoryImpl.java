@@ -17,7 +17,7 @@ public class AuthTokenRepositoryImpl implements AuthTokenRepository{
 
     private final UserDao userDao;
 
-    @Value("token.expires.after.seconds")
+    @Value("${token.expires.after.seconds}")
     private String DEFAULT_EXPIRATION;
 
     @Autowired
