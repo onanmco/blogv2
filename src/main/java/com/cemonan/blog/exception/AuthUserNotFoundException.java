@@ -1,4 +1,4 @@
-package com.cemonan.blog.exceptions;
+package com.cemonan.blog.exception;
 
 public class AuthUserNotFoundException extends RuntimeException {
     public AuthUserNotFoundException(String message) {

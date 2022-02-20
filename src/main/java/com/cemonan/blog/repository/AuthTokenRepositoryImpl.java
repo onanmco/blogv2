@@ -104,7 +104,8 @@ public class AuthTokenRepositoryImpl implements AuthTokenRepository{
             token.setExpiresAt(Instant.now().getEpochSecond());
             connection.del(key);
             connection.setex(key, Long.valueOf(DEFAULT_EXPIRATION), user.getId().toString());
-            return token;
+
+            return this.getTokenByUUID(token.getToken());
         } catch (RuntimeException ex) {
             ex.printStackTrace();
         }

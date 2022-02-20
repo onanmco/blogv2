@@ -1,4 +1,4 @@
-package com.cemonan.blog.exceptions;
+package com.cemonan.blog.exception;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

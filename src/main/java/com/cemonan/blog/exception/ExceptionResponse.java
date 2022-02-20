@@ -1,4 +1,4 @@
-package com.cemonan.blog.exceptions;
+package com.cemonan.blog.exception;
 
 import java.util.Date;
 import java.util.List;

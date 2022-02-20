@@ -1,10 +1,10 @@
-package com.cemonan.blog.interceptors;
+package com.cemonan.blog.interceptor;
 
 import com.cemonan.blog.domain.Token;
 import com.cemonan.blog.domain.User;
-import com.cemonan.blog.exceptions.AuthUserNotFoundException;
-import com.cemonan.blog.exceptions.TokenNotFoundException;
-import com.cemonan.blog.exceptions.TokenNotProvidedException;
+import com.cemonan.blog.exception.AuthUserNotFoundException;
+import com.cemonan.blog.exception.TokenNotFoundException;
+import com.cemonan.blog.exception.TokenNotProvidedException;
 import com.cemonan.blog.repository.AuthTokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
