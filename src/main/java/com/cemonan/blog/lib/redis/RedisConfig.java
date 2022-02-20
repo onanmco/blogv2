@@ -1,18 +1,12 @@
-package com.cemonan.blog.lib;
+package com.cemonan.blog.lib.redis;
 
-import com.cemonan.blog.utils.PropertyExtractor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
-import redis.clients.jedis.exceptions.JedisException;
-
-import java.util.Properties;
 
 @Configuration
-public class RedisConnector {
+public class RedisConfig {
 
     @Value("${redis.host}")
     private String host;
@@ -23,9 +17,5 @@ public class RedisConnector {
     @Bean
     public JedisPool getPool() {
         return new JedisPool(host, Integer.parseInt(port));
-    }
-
-    public Jedis getConnection() throws JedisException {
-        return getPool().getResource();
     }
 }

@@ -3,7 +3,7 @@ package com.cemonan.blog.repository;
 import com.cemonan.blog.dao.UserDao;
 import com.cemonan.blog.domain.Token;
 import com.cemonan.blog.domain.User;
-import com.cemonan.blog.lib.RedisConnector;
+import com.cemonan.blog.lib.redis.RedisConnector;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
