@@ -22,9 +22,4 @@ public class Token {
     public void setExpiresAt(Long expiresAt) {
         this.expiresAt = expiresAt;
     }
-
-    @Override
-    public String toString() {
-        return token.toString();
-    }
 }

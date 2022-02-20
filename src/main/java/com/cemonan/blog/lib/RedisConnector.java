@@ -3,30 +3,29 @@ package com.cemonan.blog.lib;
 import com.cemonan.blog.utils.PropertyExtractor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.exceptions.JedisException;
 
 import java.util.Properties;
 
+@Configuration
 public class RedisConnector {
-    private static JedisPool pool;
 
-    private RedisConnector() {}
+    @Value("${redis.host}")
+    private String host;
 
-    private static JedisPool getPool() {
-        if (pool == null) {
-            String host = PropertyExtractor.getProperty("redis.host");
-            int port = Integer.parseInt(PropertyExtractor.getProperty("redis.port"));
-            pool = new JedisPool(host, port);
-        }
-        return pool;
+    @Value("${redis.port}")
+    private String port;
+
+    @Bean
+    public JedisPool getPool() {
+        return new JedisPool(host, Integer.parseInt(port));
     }
 
-    public static Jedis getConnection() throws JedisException {
-        if (pool == null) {
-            RedisConnector.getPool();
-        }
-        return pool.getResource();
+    public Jedis getConnection() throws JedisException {
+        return getPool().getResource();
     }
 }

@@ -17,19 +17,22 @@ public class AuthTokenRepositoryImpl implements AuthTokenRepository{
 
     private final UserDao userDao;
 
+    private final RedisConnector redisConnector;
+
     @Value("${token.expires.after.seconds}")
     private String DEFAULT_EXPIRATION;
 
     @Autowired
-    public AuthTokenRepositoryImpl(UserDao userDao) {
+    public AuthTokenRepositoryImpl(UserDao userDao, RedisConnector redisConnector) {
         this.userDao = userDao;
+        this.redisConnector = redisConnector;
     }
 
     @Override
     public Token getTokenByUUID(UUID uuid) {
         Jedis connection = null;
         try {
-            connection = RedisConnector.getConnection();
+            connection = redisConnector.getConnection();
 
             Token token = new Token();
 
@@ -40,7 +43,7 @@ public class AuthTokenRepositoryImpl implements AuthTokenRepository{
             }
 
             token.setToken(uuid);
-            token.setExpiresAt(token.getExpiresAt() + ttl);
+            token.setExpiresAt(Instant.now().getEpochSecond() + ttl);
 
             return  token;
 
@@ -56,7 +59,7 @@ public class AuthTokenRepositoryImpl implements AuthTokenRepository{
     public Token create(User user) {
         Jedis connection = null;
         try {
-            connection = RedisConnector.getConnection();
+            connection = redisConnector.getConnection();
 
             Token token = new Token();
             token.setToken(UUID.randomUUID());
@@ -77,7 +80,7 @@ public class AuthTokenRepositoryImpl implements AuthTokenRepository{
     public User getUserByToken(Token token) {
         Jedis connection = null;
         try {
-            connection = RedisConnector.getConnection();
+            connection = redisConnector.getConnection();
 
             String userId = connection.get(getKeyByToken(token));
             // TODO implement UserDao
@@ -94,7 +97,7 @@ public class AuthTokenRepositoryImpl implements AuthTokenRepository{
     public Token update(Token token) {
         Jedis connection = null;
         try {
-            connection = RedisConnector.getConnection();
+            connection = redisConnector.getConnection();
 
             String key = getKeyByToken(token);
             User user = getUserByToken(token);
@@ -115,7 +118,7 @@ public class AuthTokenRepositoryImpl implements AuthTokenRepository{
     public void delete(Token token) {
         Jedis connection = null;
         try {
-            connection = RedisConnector.getConnection();
+            connection = redisConnector.getConnection();
 
             connection.del(getKeyByToken(token));
         } catch (RuntimeException ex) {
