@@ -71,4 +71,16 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler {
 
         return new ResponseEntity(response, HttpStatus.UNAUTHORIZED);
     }
+
+    @org.springframework.web.bind.annotation.ExceptionHandler
+    public final ResponseEntity<Object> handleCannotResolveApplicationPropertiesPathException(CannotResolveApplicationPropertiesPathException ex, WebRequest request) {
+        ExceptionResponse response = new ExceptionResponse();
+
+        ex.printStackTrace();
+
+        response.setTimestamp(new Date());
+        response.setMessage("Internal server error");
+
+        return new ResponseEntity(response, HttpStatus.UNAUTHORIZED);
+    }
 }
