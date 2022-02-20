@@ -1,4 +1,4 @@
-package com.cemonan.blog.controllers;
+package com.cemonan.blog.controller;
 
 import com.cemonan.blog.domain.User;
 import org.springframework.http.HttpStatus;
@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @Controller
 @RequestMapping(path = "/")

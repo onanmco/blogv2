@@ -1,4 +1,4 @@
-package com.cemonan.blog.exceptions;
+package com.cemonan.blog.exception;
 
 public class TokenNotFoundException extends RuntimeException {
     public TokenNotFoundException(String message) {

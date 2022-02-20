@@ -1,4 +1,4 @@
-package com.cemonan.blog.exceptions;
+package com.cemonan.blog.exception;
 
 public class TokenNotProvidedException extends RuntimeException {
     public TokenNotProvidedException(String message) {
