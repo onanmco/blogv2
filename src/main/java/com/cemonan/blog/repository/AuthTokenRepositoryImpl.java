@@ -3,6 +3,7 @@ package com.cemonan.blog.repository;
 import com.cemonan.blog.dao.UserDao;
 import com.cemonan.blog.domain.Token;
 import com.cemonan.blog.domain.User;
+import com.cemonan.blog.exception.DALException;
 import com.cemonan.blog.lib.redis.RedisConnector;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,7 +30,7 @@ public class AuthTokenRepositoryImpl implements AuthTokenRepository{
     }
 
     @Override
-    public Token getTokenByUUID(UUID uuid) {
+    public Token getTokenByUUID(UUID uuid) throws DALException {
         Jedis connection = null;
         try {
             connection = redisConnector.getConnection();
@@ -47,16 +48,17 @@ public class AuthTokenRepositoryImpl implements AuthTokenRepository{
 
             return  token;
 
-        } catch (RuntimeException ex) {
-            ex.printStackTrace();
+        } catch (Exception ex) {
+            DALException dalException = new DALException(ex.getMessage());
+            dalException.setStackTrace(ex.getStackTrace());
+            throw dalException;
         } finally {
             closeConnection(connection);
         }
-        return null;
     }
 
     @Override
-    public Token create(User user) {
+    public Token create(User user) throws DALException {
         Jedis connection = null;
         try {
             connection = redisConnector.getConnection();
@@ -68,16 +70,17 @@ public class AuthTokenRepositoryImpl implements AuthTokenRepository{
             connection.setex(getKeyByToken(token), Long.valueOf(DEFAULT_EXPIRATION), user.getId().toString());
 
             return token;
-        } catch (RuntimeException ex) {
-            ex.printStackTrace();
+        } catch (Exception ex) {
+            DALException dalException = new DALException(ex.getMessage());
+            dalException.setStackTrace(ex.getStackTrace());
+            throw dalException;
         } finally {
             closeConnection(connection);
         }
-        return null;
     }
 
     @Override
-    public User getUserByToken(Token token) {
+    public User getUserByToken(Token token) throws DALException {
         Jedis connection = null;
         try {
             connection = redisConnector.getConnection();
@@ -85,16 +88,17 @@ public class AuthTokenRepositoryImpl implements AuthTokenRepository{
             String userId = connection.get(getKeyByToken(token));
             // TODO implement UserDao
             return userDao.getById(UUID.fromString(userId));
-        } catch (RuntimeException ex) {
-            ex.printStackTrace();
+        } catch (Exception ex) {
+            DALException dalException = new DALException(ex.getMessage());
+            dalException.setStackTrace(ex.getStackTrace());
+            throw dalException;
         } finally {
             closeConnection(connection);
         }
-        return null;
     }
 
     @Override
-    public Token update(Token token) {
+    public Token update(Token token) throws DALException {
         Jedis connection = null;
         try {
             connection = redisConnector.getConnection();
@@ -106,24 +110,27 @@ public class AuthTokenRepositoryImpl implements AuthTokenRepository{
             connection.setex(key, Long.valueOf(DEFAULT_EXPIRATION), user.getId().toString());
 
             return this.getTokenByUUID(token.getToken());
-        } catch (RuntimeException ex) {
-            ex.printStackTrace();
+        } catch (Exception ex) {
+            DALException dalException = new DALException(ex.getMessage());
+            dalException.setStackTrace(ex.getStackTrace());
+            throw dalException;
         }
         finally {
             closeConnection(connection);
         }
-        return null;
     }
 
     @Override
-    public void delete(Token token) {
+    public void delete(Token token) throws DALException {
         Jedis connection = null;
         try {
             connection = redisConnector.getConnection();
 
             connection.del(getKeyByToken(token));
-        } catch (RuntimeException ex) {
-            ex.printStackTrace();
+        } catch (Exception ex) {
+            DALException dalException = new DALException(ex.getMessage());
+            dalException.setStackTrace(ex.getStackTrace());
+            throw dalException;
         } finally {
             closeConnection(connection);
         }

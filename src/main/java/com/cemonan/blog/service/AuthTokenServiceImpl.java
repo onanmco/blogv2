@@ -2,6 +2,7 @@ package com.cemonan.blog.service;
 
 import com.cemonan.blog.domain.Token;
 import com.cemonan.blog.domain.User;
+import com.cemonan.blog.exception.DALException;
 import com.cemonan.blog.repository.AuthTokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -38,12 +39,12 @@ public class AuthTokenServiceImpl implements AuthTokenService {
     }
 
     @Override
-    public Token create(User user) {
+    public Token create(User user) throws DALException {
         return authTokenRepository.create(user);
     }
 
     @Override
-    public Token extendTokensExpiration(Token token) {
+    public Token extendTokensExpiration(Token token) throws DALException {
         token.setExpiresAt(Instant.now().getEpochSecond() + Long.valueOf(DEFAULT_EXPIRATION));
         return authTokenRepository.update(token);
     }
