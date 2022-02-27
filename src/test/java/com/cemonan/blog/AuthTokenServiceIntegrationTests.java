@@ -59,7 +59,7 @@ public class AuthTokenServiceIntegrationTests {
     }
 
     @Test
-    void testExtendExpirationTimeOfToken() throws DALException {
+    void testExtendExpirationTimeOfToken() {
         Token token = null;
         try {
             token = tokenFactory.create();
@@ -68,7 +68,13 @@ public class AuthTokenServiceIntegrationTests {
             fail(e.getMessage());
         }
 
-        Token extendedToken = authTokenService.extendTokensExpiration(token);
+        Token extendedToken = null;
+        try {
+            extendedToken = authTokenService.extendTokensExpiration(token);
+        } catch (DALException e) {
+            e.printStackTrace();
+            fail(e.getMessage());
+        }
 
         assertThat(extendedToken.getExpiresAt()).isGreaterThan(token.getExpiresAt());
 
