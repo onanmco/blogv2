@@ -2,6 +2,7 @@ package com.cemonan.blog.factory;
 
 import com.cemonan.blog.domain.Token;
 import com.cemonan.blog.domain.User;
+import com.cemonan.blog.exception.DALException;
 import com.cemonan.blog.repository.AuthTokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -22,14 +23,13 @@ public class TokenFactoryImpl implements TokenFactory {
     }
 
     @Override
-    public Token create() {
+    public Token create() throws DALException {
         User user = userFactory.create();
-        Token token = authTokenRepository.create(user);
-        return token;
+        return authTokenRepository.create(user);
     }
 
     @Override
-    public List<Token> create(int size) {
+    public List<Token> create(int size) throws DALException {
         List<Token> tokens = new ArrayList<>();
         for (int i = 0; i < size; i++) {
             tokens.add(create());

@@ -81,6 +81,18 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler {
         response.setTimestamp(new Date());
         response.setMessage("Internal server error");
 
-        return new ResponseEntity(response, HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity(response, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @org.springframework.web.bind.annotation.ExceptionHandler
+    public final ResponseEntity<Object> handleDALException(DALException ex, WebRequest request) {
+        ExceptionResponse response = new ExceptionResponse();
+
+        ex.printStackTrace();
+
+        response.setTimestamp(new Date());
+        response.setMessage("Internal server error");
+
+        return new ResponseEntity(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

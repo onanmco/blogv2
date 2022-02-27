@@ -2,6 +2,7 @@ package com.cemonan.blog;
 
 import com.cemonan.blog.domain.Token;
 import com.cemonan.blog.domain.User;
+import com.cemonan.blog.exception.DALException;
 import com.cemonan.blog.factory.TokenFactory;
 import com.cemonan.blog.factory.UserFactory;
 import com.cemonan.blog.service.AuthTokenService;
@@ -13,6 +14,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 import java.time.Instant;
 
+import static org.assertj.core.api.AssertionsForClassTypes.fail;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 @SpringBootTest
@@ -34,7 +36,13 @@ public class AuthTokenServiceIntegrationTests {
 
     @Test
     void testCreateToken() {
-        Token token = tokenFactory.create();
+        Token token = null;
+        try {
+            token = tokenFactory.create();
+        } catch (DALException e) {
+            e.printStackTrace();
+            fail(e.getMessage());
+        }
 
         assertThat(token).isNotNull();
         assertThat(token.getToken()).isNotNull();
@@ -52,9 +60,21 @@ public class AuthTokenServiceIntegrationTests {
 
     @Test
     void testExtendExpirationTimeOfToken() {
-        Token token = tokenFactory.create();
+        Token token = null;
+        try {
+            token = tokenFactory.create();
+        } catch (DALException e) {
+            e.printStackTrace();
+            fail(e.getMessage());
+        }
 
-        Token extendedToken = authTokenService.extendTokensExpiration(token);
+        Token extendedToken = null;
+        try {
+            extendedToken = authTokenService.extendTokensExpiration(token);
+        } catch (DALException e) {
+            e.printStackTrace();
+            fail(e.getMessage());
+        }
 
         assertThat(extendedToken.getExpiresAt()).isGreaterThan(token.getExpiresAt());
 
