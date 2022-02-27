@@ -59,7 +59,7 @@ public class AuthTokenServiceIntegrationTests {
     }
 
     @Test
-    void testExtendExpirationTimeOfToken() {
+    void testExtendExpirationTimeOfToken() throws DALException {
         Token token = null;
         try {
             token = tokenFactory.create();
