@@ -25,8 +25,7 @@ public class TokenFactoryImpl implements TokenFactory {
     @Override
     public Token create() throws DALException {
         User user = userFactory.create();
-        Token token = authTokenRepository.create(user);
-        return token;
+        return authTokenRepository.create(user);
     }
 
     @Override
