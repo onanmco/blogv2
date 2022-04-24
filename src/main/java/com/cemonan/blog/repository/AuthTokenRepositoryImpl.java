@@ -1,6 +1,6 @@
 package com.cemonan.blog.repository;
 
-import com.cemonan.blog.dao.UserDao;
+import com.cemonan.blog.dao.user.UserDao;
 import com.cemonan.blog.domain.Token;
 import com.cemonan.blog.domain.User;
 import com.cemonan.blog.exception.DALException;

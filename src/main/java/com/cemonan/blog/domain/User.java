@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.*;
-import java.util.Date;
+import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @Component
@@ -31,8 +31,8 @@ public class User {
     @Size(min = 8, message = "password cannot be less than 8 characters.")
     @Size(max = 32, message = "password cannot be longer than 32 characters.")
     private String password;
-    private Date createdAt;
-    private Date updatedAt;
+    private OffsetDateTime createdAt;
+    private OffsetDateTime updatedAt;
 
     public UUID getId() {
         return id;
@@ -74,19 +74,19 @@ public class User {
         this.password = password;
     }
 
-    public Date getCreatedAt() {
+    public OffsetDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(OffsetDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
-    public Date getUpdatedAt() {
+    public OffsetDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Date updatedAt) {
+    public void setUpdatedAt(OffsetDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
 }

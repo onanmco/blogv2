@@ -7,6 +7,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -46,7 +47,7 @@ public class UserFactoryImpl implements UserFactory {
         user.setLastName(faker.name().lastName());
         user.setEmail(faker.internet().emailAddress());
         user.setPassword(faker.internet().password());
-        Date now = new Date();
+        OffsetDateTime now = new Date();
         user.setCreatedAt(now);
         user.setUpdatedAt(now);
         return user;
